@@ -1,4 +1,4 @@
-<img width="1344" height="244" alt="image" src="https://github.com/user-attachments/assets/fb9d7c47-6277-4e96-928e-173028fdb083" /># REPORT
+# REPORT
 
 Лабораторна робота №1  
 Open Data AI Analytics  
