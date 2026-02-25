@@ -1,1 +1,7 @@
-# will be configured in step 3
+__pycache__/
+.ipynb_checkpoints/
+
+.venv/
+.env
+
+data/raw/
