@@ -28,7 +28,7 @@ def main() -> None:
     parser.add_argument("--out", type=str, default="reports/quality_report.json", help="Output report path")
     args = parser.parse_args()
 
-    df = pd.read_csv(args.input)
+    df = pd.read_csv(args.input, sep=None, engine="python", encoding="utf-8-sig", on_bad_lines="warn")
     rep = quality_report(df)
 
     out_path = Path(args.out)
