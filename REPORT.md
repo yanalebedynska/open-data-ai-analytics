@@ -650,6 +650,17 @@ GitHub показав, що конфлікти відсутні
 
 ---
 
+## 13. Git-історія проєкту
+
+Для перегляду структури гілок та історії комітів було використано команду:
+- git --no-pager log --oneline --graph --decorate --all
+
+Що показує ця команда:
+
+--oneline - скорочений вигляд комітів (hash + повідомлення)
+--graph - візуальне дерево гілок
+--decorate - показує, де знаходяться гілки та теги
+--all - відображає всі гілки
 
 <img width="1004" height="612" alt="image" src="https://github.com/user-attachments/assets/ec97fab4-fed4-4d24-b286-a4fddae31c9a" />
 
