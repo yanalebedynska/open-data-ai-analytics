@@ -633,7 +633,6 @@ GitHub показав, що конфлікти відсутні
 - git push origin v0.1.0
 
 <img width="1004" height="113" alt="image" src="https://github.com/user-attachments/assets/61266ca2-75c5-4cde-ab80-e8a47224d801" />
-<img width="1004" height="280" alt="image" src="https://github.com/user-attachments/assets/13b87109-226c-4aa1-941d-53db5189fa68" />
 
 ---
 
@@ -646,9 +645,14 @@ GitHub показав, що конфлікти відсутні
 - він прив’язаний до останнього коміту в гілці `main`
 - реліз відображається у списку тегів
 
-<img width="1004" height="612" alt="image" src="https://github.com/user-attachments/assets/ec97fab4-fed4-4d24-b286-a4fddae31c9a" />
+
+<img width="1004" height="280" alt="image" src="https://github.com/user-attachments/assets/13b87109-226c-4aa1-941d-53db5189fa68" />
 
 ---
+
+
+<img width="1004" height="612" alt="image" src="https://github.com/user-attachments/assets/ec97fab4-fed4-4d24-b286-a4fddae31c9a" />
+
 
 ## Висновок
 
