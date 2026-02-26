@@ -502,7 +502,6 @@ GitHub показав, що конфлікти відсутні
 - Git не зміг автоматично визначити правильну версію
 
 <img width="1004" height="230" alt="image" src="https://github.com/user-attachments/assets/984281f9-c4de-40c9-8472-6b7c8815d678" />
-<img width="1004" height="230" alt="image" src="https://github.com/user-attachments/assets/b43c0f52-670a-4aa6-8479-a6c7569586a0" />
 <img width="1004" height="198" alt="image" src="https://github.com/user-attachments/assets/633cb261-0a0f-40a7-80ba-372caba1fb57" />
 
 ---
