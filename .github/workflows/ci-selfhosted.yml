@@ -14,9 +14,10 @@ jobs:
       - name: Run module locally
         shell: powershell
         run: |
-         $ErrorActionPreference = 'Continue'
+          cd "I:\3 курс\2 семсетр\Середовище та компоненти розробки\Lab1\open-data-ai-analytics"
           if (!(Test-Path "artifacts/visualization")) { mkdir "artifacts/visualization" }
           python src/visualization.py
+        
         
 
       - name: Upload local results
