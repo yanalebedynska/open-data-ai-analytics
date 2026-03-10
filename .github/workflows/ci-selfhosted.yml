@@ -13,9 +13,9 @@ jobs:
 
       - name: Run module locally
         run: |
-          if not exist artifacts\visualization mkdir artifacts\visualization
+          New-Item -ItemType Directory -Force -Path artifacts/visualization
           python src/visualization.py > artifacts/visualization/run.log 2>&1
-        shell: cmd
+        shell: powershell
 
       - name: Upload local results
         uses: actions/upload-artifact@v4
