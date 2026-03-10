@@ -12,10 +12,12 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run module locally
+        shell: powershell
         run: |
-          mkdir -p artifacts/visualization
+         $ErrorActionPreference = 'Continue'
+          if (!(Test-Path "artifacts/visualization")) { mkdir "artifacts/visualization" }
           python src/visualization.py
-        shell: bash
+        
 
       - name: Upload local results
         uses: actions/upload-artifact@v4
