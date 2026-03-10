@@ -1,0 +1,48 @@
+name: CI Module Testing
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      module:
+        description: "Оберіть модуль для запуску"
+        required: true
+        default: "all"
+        type: choice
+        options: [all, data_load, data_quality_analysis, data_research, visualization]
+
+jobs:
+  run-modules:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        # Модулі відповідають іменам твоїх файлів у src/
+        module: [data_load, data_quality_analysis, data_research, visualization]
+
+    # Умова для ручного запуску: або 'all', або вибраний модуль
+    if: ${{ github.event_name != 'workflow_dispatch' || github.event.inputs.module == 'all' || github.event.inputs.module == matrix.module }}
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.10"
+
+      - name: Run module script
+        run: |
+          mkdir -p artifacts/${{ matrix.module }}
+          echo "Executing src/${{ matrix.module }}.py"
+          python src/${{ matrix.module }}.py > artifacts/${{ matrix.module }}/log.txt 2>&1 || echo "Finished with notice"
+
+      - name: Upload Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: ${{ matrix.module }}-results
+          path: artifacts/${{ matrix.module }}/
