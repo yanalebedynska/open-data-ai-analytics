@@ -13,11 +13,7 @@ jobs:
 
       - name: Run module locally
         run: |
-          # Створюємо папку для результатів, якщо її ще немає
           if not exist artifacts\visualization mkdir artifacts\visualization
-          
-          # Запуск скрипта. Тепер він побачить локальні файли в папці data/
-          # Використовуємо перенаправлення виводу в лог-файл
           python src/visualization.py > artifacts/visualization/run.log 2>&1
         shell: cmd
 
