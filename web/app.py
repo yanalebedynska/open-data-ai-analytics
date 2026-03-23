@@ -12,7 +12,7 @@ PLOTS_DIR = Path("/app/plots")
 
 def load_json_file(path: Path):
     if not path.exists():
-        return {"status": "not_found", "message": f"File {path.name} has not been generated yet"}
+        return None
     return json.loads(path.read_text(encoding="utf-8"))
 
 
@@ -21,7 +21,30 @@ def index():
     load_report = load_json_file(REPORTS_DIR / "load_report.json")
     quality_report = load_json_file(REPORTS_DIR / "quality_report.json")
     research_report = load_json_file(REPORTS_DIR / "research_summary.json")
+
     plot_files = sorted([p.name for p in PLOTS_DIR.glob("*.png")])
+
+    summary_cards = []
+
+    if load_report:
+        summary_cards.append({
+            "title": "Завантажено рядків",
+            "value": load_report.get("rows_loaded", "—")
+        })
+        summary_cards.append({
+            "title": "Кількість стовпців",
+            "value": load_report.get("columns_loaded", "—")
+        })
+
+    if quality_report:
+        summary_cards.append({
+            "title": "Пропущені значення",
+            "value": quality_report.get("missing_values_total", "—")
+        })
+        summary_cards.append({
+            "title": "Дублікати",
+            "value": quality_report.get("duplicate_rows", "—")
+        })
 
     return render_template(
         "index.html",
@@ -29,6 +52,7 @@ def index():
         quality_report=quality_report,
         research_report=research_report,
         plot_files=plot_files,
+        summary_cards=summary_cards,
     )
 
 

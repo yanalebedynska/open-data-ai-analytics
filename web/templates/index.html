@@ -2,47 +2,86 @@
 <html lang="uk">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Open Data AI Analytics</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <h1>Open Data AI Analytics</h1>
+    <div class="page">
+        <header class="hero">
+            <div class="hero-badge">Лабораторна робота №3</div>
+            <h1>Open Data AI Analytics</h1>
+            <p class="hero-text">
+                Контейнеризований веб-інтерфейс для перегляду результатів аналізу відкритих даних про ДТП.
+                Сторінка об’єднує результати завантаження даних, перевірки якості, базового дослідження
+                та побудованих візуалізацій.
+            </p>
+        </header>
 
-        <p class="description">
-            Веб-інтерфейс контейнеризованого проєкту для аналізу відкритих даних про ДТП.
-            На сторінці відображаються результати завантаження даних, перевірки якості,
-            базового дослідження набору даних та побудовані візуалізації.
-        </p>
+        <section class="cards-section">
+            <h2>Коротке зведення</h2>
+            <div class="cards-grid">
+                {% if summary_cards %}
+                    {% for card in summary_cards %}
+                        <div class="stat-card">
+                            <div class="stat-title">{{ card.title }}</div>
+                            <div class="stat-value">{{ card.value }}</div>
+                        </div>
+                    {% endfor %}
+                {% else %}
+                    <div class="empty-card">
+                        Дані для короткого зведення ще не сформовані.
+                    </div>
+                {% endif %}
+            </div>
+        </section>
 
-        <section>
+        <section class="content-section">
             <h2>1. Результати завантаження даних</h2>
-            <pre>{{ load_report | tojson(indent=2) }}</pre>
+            {% if load_report %}
+                <div class="json-block">
+<pre>{{ load_report | tojson(indent=2) }}</pre>
+                </div>
+            {% else %}
+                <div class="empty-card">Файл load_report.json ще не сформований.</div>
+            {% endif %}
         </section>
 
-        <section>
+        <section class="content-section">
             <h2>2. Результати перевірки якості даних</h2>
-            <pre>{{ quality_report | tojson(indent=2) }}</pre>
+            {% if quality_report %}
+                <div class="json-block">
+<pre>{{ quality_report | tojson(indent=2) }}</pre>
+                </div>
+            {% else %}
+                <div class="empty-card">Файл quality_report.json ще не сформований.</div>
+            {% endif %}
         </section>
 
-        <section>
+        <section class="content-section">
             <h2>3. Результати дослідження даних</h2>
-            <pre>{{ research_report | tojson(indent=2) }}</pre>
+            {% if research_report %}
+                <div class="json-block">
+<pre>{{ research_report | tojson(indent=2) }}</pre>
+                </div>
+            {% else %}
+                <div class="empty-card">Файл research_summary.json ще не сформований.</div>
+            {% endif %}
         </section>
 
-        <section>
+        <section class="content-section">
             <h2>4. Візуалізації</h2>
             {% if plot_files %}
-                <div class="plots">
+                <div class="plots-grid">
                     {% for plot in plot_files %}
                         <div class="plot-card">
-                            <p>{{ plot }}</p>
+                            <div class="plot-title">{{ plot }}</div>
                             <img src="{{ url_for('serve_plot', filename=plot) }}" alt="{{ plot }}">
                         </div>
                     {% endfor %}
                 </div>
             {% else %}
-                <p>Графіки ще не згенеровані.</p>
+                <div class="empty-card">Графіки ще не згенеровані.</div>
             {% endif %}
         </section>
     </div>

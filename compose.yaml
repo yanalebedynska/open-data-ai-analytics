@@ -1,0 +1,125 @@
+services:
+  db:
+    image: postgres:16
+    container_name: lab3_db
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./db/init:/docker-entrypoint-initdb.d
+    networks:
+      - app_network
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USER} -d ${DB_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  data_load:
+    build:
+      context: .
+      dockerfile: data_load/Dockerfile
+    container_name: lab3_data_load
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+    volumes:
+      - ./data:/app/data:ro
+      - ./reports:/app/reports
+    networks:
+      - app_network
+    restart: "no"
+
+  data_quality_analysis:
+    build:
+      context: .
+      dockerfile: data_quality_analysis/Dockerfile
+    container_name: lab3_data_quality_analysis
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      data_load:
+        condition: service_completed_successfully
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - app_network
+    restart: "no"
+
+  data_research:
+    build:
+      context: .
+      dockerfile: data_research/Dockerfile
+    container_name: lab3_data_research
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      data_load:
+        condition: service_completed_successfully
+    volumes:
+      - ./reports:/app/reports
+    networks:
+      - app_network
+    restart: "no"
+
+  visualization:
+    build:
+      context: .
+      dockerfile: visualization/Dockerfile
+    container_name: lab3_visualization
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      data_load:
+        condition: service_completed_successfully
+    volumes:
+      - ./plots:/app/plots
+    networks:
+      - app_network
+    restart: "no"
+
+  web:
+    build:
+      context: .
+      dockerfile: web/Dockerfile
+    container_name: lab3_web
+    env_file:
+      - .env
+    depends_on:
+      db:
+        condition: service_healthy
+      data_quality_analysis:
+        condition: service_completed_successfully
+      data_research:
+        condition: service_completed_successfully
+      visualization:
+        condition: service_completed_successfully
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./reports:/app/reports:ro
+      - ./plots:/app/plots:ro
+    networks:
+      - app_network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  app_network:
+    driver: bridge
