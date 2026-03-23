@@ -81,7 +81,8 @@ project/
 ├── plots/
 ├── compose.yaml
 ├── .env.example
-└── README.md```
+└── README.md
+```
 
 
 ## Опис сервісів
