@@ -5,3 +5,13 @@ __pycache__/
 .env
 
 data/raw/
+
+.idea/
+agent/
+FETCH_HEAD
+.env
+__pycache__/
+*.pyc
+
+reports/*.json
+plots/*.png
