@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <title>Open Data AI Analytics</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Open Data AI Analytics</h1>
+
+        <p class="description">
+            Веб-інтерфейс контейнеризованого проєкту для аналізу відкритих даних про ДТП.
+            На сторінці відображаються результати завантаження даних, перевірки якості,
+            базового дослідження набору даних та побудовані візуалізації.
+        </p>
+
+        <section>
+            <h2>1. Результати завантаження даних</h2>
+            <pre>{{ load_report | tojson(indent=2) }}</pre>
+        </section>
+
+        <section>
+            <h2>2. Результати перевірки якості даних</h2>
+            <pre>{{ quality_report | tojson(indent=2) }}</pre>
+        </section>
+
+        <section>
+            <h2>3. Результати дослідження даних</h2>
+            <pre>{{ research_report | tojson(indent=2) }}</pre>
+        </section>
+
+        <section>
+            <h2>4. Візуалізації</h2>
+            {% if plot_files %}
+                <div class="plots">
+                    {% for plot in plot_files %}
+                        <div class="plot-card">
+                            <p>{{ plot }}</p>
+                            <img src="{{ url_for('serve_plot', filename=plot) }}" alt="{{ plot }}">
+                        </div>
+                    {% endfor %}
+                </div>
+            {% else %}
+                <p>Графіки ще не згенеровані.</p>
+            {% endif %}
+        </section>
+    </div>
+</body>
+</html>
