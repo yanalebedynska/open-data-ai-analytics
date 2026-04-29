@@ -1,0 +1,12 @@
+#cloud-config
+package_update: true
+
+runcmd:
+  - apt update
+  - apt install -y docker.io git
+  - systemctl start docker
+  - systemctl enable docker
+
+  - git clone https://github.com/yanalebedynska/open-data-ai-analytics.git
+  - cd open-data-ai-analytics
+  - docker compose up -d
